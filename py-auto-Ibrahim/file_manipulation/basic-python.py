@@ -16,4 +16,4 @@ for arg in reversed(sys.argv[1:]):
 files_in_current_dir = sorted(os.listdir("img"))
 for file in files_in_current_dir:
     if os.path.splitext(file)[1] == '.png':
-        os.system(f'feh {file}')  
+        os.system(f'feh {file}')

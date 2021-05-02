@@ -1,0 +1,24 @@
+#!/bin/sh
+RED="\033[1;31m"
+GREEN="\033[1;32m"
+NC="\033[0m"
+
+all_py_files=$(git diff --cached --diff-filter=d --name-only | grep .py$)
+
+# @see: https://stackoverflow.com/questions/24628076/convert-multiline-string-to-array
+SAVEIFS=$IFS                  # Save current IFS
+IFS=$'\n'                     # Change IFS to new line
+autopep8 -i $all_py_files
+IFS=$SAVEIFS                  # Restore IFS
+
+formatter_exit_code=$?
+
+git add -f $all_py_files
+
+if [ $formatter_exit_code -ne 0 ]; then
+  echo "${RED} ❌ autopep8 errors have occurred ( ͡ಥ ͜ʖ ͡ಥ)${NC}"
+  exit 1
+else
+  echo "${GREEN} ✔ Files are formatted [̲̅$̲̅(̲̅ ͡° ͜ʖ ͡°̲̅)̲̅$̲̅]${NC}"
+  exit 0
+fi

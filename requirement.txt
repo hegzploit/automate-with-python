@@ -1,0 +1,6 @@
+beautifulsoup4==4.9.3
+bs4==0.0.1
+qrcode==6.1
+six==1.15.0
+soupsieve==2.2.1
+tqdm==4.60.0
