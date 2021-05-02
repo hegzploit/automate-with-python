@@ -47,7 +47,8 @@ for dev in tqdm(developers):
 
     if ("guc" in to_search_in or "german" in to_search_in):
         name = dev_soup.select(".vcard-fullname")[0].text
-        more_info = dev_soup.select(".js-profile-editable-area .Link--secondary")
+        more_info = dev_soup.select(
+            ".js-profile-editable-area .Link--secondary")
         followers = more_info[0].find("span").text
         following = more_info[1].find("span").text
         gucians.append((username, name.strip(), followers, following, URL))
@@ -61,4 +62,3 @@ with open("gucians.csv", "w") as f:
     f.write("username,name,followers,following,url\n")
     for dev in gucians:
         f.write(f"{dev[0]},{dev[1]},{dev[2]},{dev[3]},{dev[4]}\n")
-
