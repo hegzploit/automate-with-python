@@ -1,37 +1,39 @@
 #!/usr/bin/python3
-
+import csv
 from bs4 import BeautifulSoup
 import requests
 URL = "https://commits.top/egypt.html"
-
-
+NUMBER_OF_PEOPLE=256
 def get_data(LINK):
-    r = requests.get(LINK, "lxml")
-    soup = BeautifulSoup(r.content)
-    allSpans = soup.find_all("span")
-    allImgs = soup.find_all("img")
-    for span in allSpans:
+    r = requests.get(LINK)
+    soup = BeautifulSoup(r.content,"lxml")
+    all_spans = soup.find_all("span")
+    all_imgs = soup.find_all("img")
+    for span in all_spans:
         if "p-name" in str(span):
-            pName = span
+            person_name = span
         if "text-bold color-text-primary" in str(span):
-            noOfFollowers = span
-    for img in allImgs:
+            no_of_followers = span
+    for img in all_imgs:
         if "avatar" in str(img):
-            pImg = img["src"]
-    currentName = str(pName.contents).split("\\n")[1]
-    noOfFollowers = str(noOfFollowers.contents).strip("[']")
-    return currentName, noOfFollowers, pImg
+            person_img = img["src"]
+    current_name = str(person_name.contents).split("\\n")[1]
+    no_of_followers = str(no_of_followers.contents).strip("[']")
+    return current_name, no_of_followers, person_img
 
 
 current_URL = URL
-r = requests.get(current_URL, "lxml")
-soup = BeautifulSoup(r.content)  # content => byte string
+r = requests.get(current_URL)
+soup = BeautifulSoup(r.content,"lxml")
 people_list = soup.find_all("td")
 print("Please wait while data is being scraped/stolen")
-for i in range(256):
+for i in range(NUMBER_OF_PEOPLE):
     entry = str(people_list[i])
     if("github.com" in entry):
         entry = entry.split('"')[1]
         name, follow, img = get_data(entry)
-        print("Our target:" + name + " has " + follow +
-              " Followers" + " and his image can be found at: " + img)
+        row=[name,follow,img]
+        with open('data.csv','a') as f:
+            writer = csv.writer(f)
+            writer.writerow(row)
+
