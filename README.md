@@ -15,11 +15,14 @@ import sys
 for arg in reversed(sys.argv[1:]):
   print(arg, end='\t')
 ```
+
 ```bash
 >>> python3 file.py 1 2 3 
 1     2       3 
+```
 
 We can use argprase for more advanced usage.
+
 ```python
 import argprase 
 
