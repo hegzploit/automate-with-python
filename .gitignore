@@ -1,2 +1,9 @@
 .vscode/
 venv/
+
+# generated from, py-auto-Ibrahim/code-snipptes/qr.py
+blog.png
+
+# generated from, py-auto-Ibrahim/paper
+paper.pdf
+plot-daa.png
