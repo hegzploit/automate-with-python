@@ -15,6 +15,7 @@ for td in clean_tds:
     name = str(td.contents[-1])
     github_r = requests.get(github_link)
     soup = BeautifulSoup(github_r.content, "lxml")
-    followers = soup.find("span", {"class":"text-bold color-text-primary"}).text
+    followers = soup.find(
+        "span", {"class": "text-bold color-text-primary"}).text
     with open("data.csv", "a") as f:
         f.write(f"{github_link}, {name}, {followers}\n")
